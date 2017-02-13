@@ -65,11 +65,11 @@ namespace LanguageExt
             List.filter(queue, predicate);
 
         [Pure]
-        public static IEnumerable<T> choose<T>(Que<T> queue, Func<T, Option<T>> selector) =>
+        public static IEnumerable<R> choose<T, R>(Que<T> queue, Func<T, Option<R>> selector) =>
             List.choose(queue, selector);
 
         [Pure]
-        public static IEnumerable<T> choose<T>(Que<T> queue, Func<int, T, Option<T>> selector) =>
+        public static IEnumerable<R> choose<T, R>(Que<T> queue, Func<int, T, Option<R>> selector) =>
             List.choose(queue, selector);
 
         [Pure]
@@ -155,6 +155,10 @@ namespace LanguageExt
             List.distinct(queue, compare);
 
         [Pure]
+        public static IEnumerable<T> distinct<T, K>(Que<T> queue, Func<T, K> keySelector, Option<Func<K, K, bool>> compare = default(Option<Func<K, K, bool>>)) =>
+            List.distinct(queue, keySelector, compare);
+
+        [Pure]
         public static IEnumerable<T> take<T>(Que<T> queue, int count) =>
             List.take(queue, count);
 
@@ -202,11 +206,11 @@ namespace LanguageExt
             LanguageExt.List.filter(queue, predicate);
 
         [Pure]
-        public static IEnumerable<T> Choose<T>(this Que<T> queue, Func<T, Option<T>> selector) =>
+        public static IEnumerable<R> Choose<T, R>(this Que<T> queue, Func<T, Option<R>> selector) =>
             LanguageExt.List.choose(queue, selector);
 
         [Pure]
-        public static IEnumerable<T> Choose<T>(this Que<T> queue, Func<int, T, Option<T>> selector) =>
+        public static IEnumerable<R> Choose<T, R>(this Que<T> queue, Func<int, T, Option<R>> selector) =>
             LanguageExt.List.choose(queue, selector);
 
         [Pure]
@@ -264,11 +268,15 @@ namespace LanguageExt
             LanguageExt.List.forall(queue, pred);
 
         [Pure]
-        public static IEnumerable<T> Distinct<T>(Que<T> queue, Func<T, T, bool> compare) =>
+        public static IEnumerable<T> Distinct<T>(this Que<T> queue, Func<T, T, bool> compare) =>
             LanguageExt.List.distinct(queue, compare);
+        
+        [Pure]
+        public static IEnumerable<T> Distinct<T, K>(this Que<T> queue, Func<T, K> keySelector, Option<Func<K, K, bool>> compare = default(Option<Func<K, K, bool>>)) =>
+            LanguageExt.List.distinct(queue, keySelector, compare);
 
         [Pure]
-        public static bool Exists<T>(Que<T> queue, Func<T, bool> pred) =>
+        public static bool Exists<T>(this Que<T> queue, Func<T, bool> pred) =>
             LanguageExt.List.exists(queue, pred);
     }
 }

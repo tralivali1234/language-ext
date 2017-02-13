@@ -11,7 +11,7 @@ This library uses and abuses the features of C# 6 to provide a functional 'Base 
 
 Nu-get package | Description
 ---------------|-------------
-[LanguageExt.Core](https://www.nuget.org/packages/LanguageExt.Core) | All of the core types and functional 'prelude'.  This is all that's needed to get started.
+[LanguageExt.Core](https://www.nuget.org/packages/LanguageExt.Core) | All of the core types and functional 'prelude'.  __This is all that's needed to get started__.
 [LanguageExt.FSharp](https://www.nuget.org/packages/LanguageExt.FSharp) | F# to C# interop library.  Provides interop between the LanguageExt.Core types (like `Option`, `List` and `Map`) to the F# equivalents, as well as interop between core BCL types and F#
 [LanguageExt.Parsec](https://www.nuget.org/packages/LanguageExt.Parsec) | Port of the [Haskell parsec library](https://hackage.haskell.org/package/parsec)
 [LanguageExt.Process](https://www.nuget.org/packages/LanguageExt.Process) | 'Erlang like' actor system for in-app messaging and massive concurrency
@@ -1255,5 +1255,7 @@ Type or function | Description
 `failwith(message)` | Throws an `Exception` with the message provided.  Useful in lambda's where a return value is needed.
 `identity<T>()` | Identity function.  Returns the same value it was passed.
 
-### Future
-There's more to come with this library.  Feel free to get in touch with any suggestions.
+### Contributions
+All contributors are welcome.  For anything other than bug fixes please get in touch via the issues page.  There are no fixed rules on what should and shouldn't be in this library, but some features are more valuable than others, and some require long-term maintenance that outweights the value of the feature.  So please get sign-off from the project leader (Paul Louth) before putting in an excessive amount of work. 
+
+If you would just like to get involved, but don't have any major feature work to submit, then the project will always benefit from more unit-tests, documentation, peer-review, etc.  

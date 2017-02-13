@@ -165,7 +165,7 @@ namespace LanguageExt
         /// <param name="selector">Selector function</param>
         /// <returns>Mapped and filtered enumerable</returns>
         [Pure]
-        public static IEnumerable<T> choose<T>(Stck<T> stack, Func<T, Option<T>> selector) =>
+        public static IEnumerable<R> choose<T, R>(Stck<T> stack, Func<T, Option<R>> selector) =>
             List.choose(stack, selector);
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace LanguageExt
         /// <param name="selector">Selector function</param>
         /// <returns>Mapped and filtered enumerable</returns>
         [Pure]
-        public static IEnumerable<T> choose<T>(Stck<T> stack, Func<int, T, Option<T>> selector) =>
+        public static IEnumerable<R> choose<T, R>(Stck<T> stack, Func<int, T, Option<R>> selector) =>
             List.choose(stack, selector);
 
         /// <summary>
@@ -465,6 +465,16 @@ namespace LanguageExt
             List.distinct(stack, compare);
 
         /// <summary>
+        /// Return an enumerable with all duplicate values removed
+        /// </summary>
+        /// <typeparam name="T">Stack item type</typeparam>
+        /// <param name="stack">Stack</param>
+        /// <returns>An enumerable with all duplicate values removed</returns>
+        [Pure]
+        public static IEnumerable<T> distinct<T, K>(Stck<T> stack, Func<T, K> keySelector, Option<Func<K, K, bool>> compare = default(Option<Func<K, K, bool>>)) =>
+            List.distinct(stack, keySelector, compare);
+
+        /// <summary>
         /// Returns a new enumerable with the first 'count' items from the stack
         /// </summary>
         /// <typeparam name="T">Stack item type</typeparam>
@@ -558,7 +568,7 @@ public static class StackExtensions
     /// <param name="selector">Selector function</param>
     /// <returns>Mapped and filtered enumerable</returns>
     [Pure]
-    public static IEnumerable<T> Choose<T>(this Stck<T> stack, Func<T, Option<T>> selector) =>
+    public static IEnumerable<R> Choose<T, R>(this Stck<T> stack, Func<T, Option<R>> selector) =>
         LanguageExt.List.choose(stack, selector);
 
     /// <summary>
@@ -571,7 +581,7 @@ public static class StackExtensions
     /// <param name="selector">Selector function</param>
     /// <returns>Mapped and filtered enumerable</returns>
     [Pure]
-    public static IEnumerable<T> Choose<T>(this Stck<T> stack, Func<int, T, Option<T>> selector) =>
+    public static IEnumerable<R> Choose<T, R>(this Stck<T> stack, Func<int, T, Option<R>> selector) =>
         LanguageExt.List.choose(stack, selector);
 
     /// <summary>
@@ -840,6 +850,16 @@ public static class StackExtensions
         LanguageExt.List.distinct(stack, compare);
 
     /// <summary>
+    /// Return an enumerable with all duplicate values removed
+    /// </summary>
+    /// <typeparam name="T">Stack item type</typeparam>
+    /// <param name="stack">Stack</param>
+    /// <returns>An enumerable with all duplicate values removed</returns>
+    [Pure]
+    public static IEnumerable<T> Distinct<T, K>(this Stck<T> stack, Func<T, K> keySelector, Option<Func<K, K, bool>> compare = default(Option<Func<K, K, bool>>)) =>
+        LanguageExt.List.distinct(stack, keySelector, compare);
+
+    /// <summary>
     /// Returns a new enumerable with the first 'count' items from the stack
     /// </summary>
     /// <typeparam name="T">Stack item type</typeparam>
@@ -882,6 +902,6 @@ public static class StackExtensions
     /// <param name="pred">Predicate</param>
     /// <returns>True if any item in the stack matches the predicate provided</returns>
     [Pure]
-    public static bool Exists<T>(Stck<T> stack, Func<T, bool> pred) =>
+    public static bool Exists<T>(this Stck<T> stack, Func<T, bool> pred) =>
         LanguageExt.List.exists(stack, pred);
 }
