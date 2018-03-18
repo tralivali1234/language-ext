@@ -1,14 +1,10 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-
 using static LanguageExt.Prelude;
+using LanguageExt.ClassInstances;
 using LanguageExt;
-using LanguageExt.Trans;
-using System.Net;
-using System.Collections.Generic;
+using System.Net.Http;
 
 namespace LanguageExtTests
 {
@@ -64,11 +60,11 @@ namespace LanguageExtTests
         Task<Uri> parseUri(string uri) => 
             new Uri(uri).AsTask();
 
-        Task<WebClient> getClient() =>
-            Task.FromResult(new WebClient());
+        Task<HttpClient> getClient() =>
+            Task.FromResult(new HttpClient());
 
-        Task<string> getContent(Uri uri, WebClient client) =>
-            client.DownloadStringTaskAsync(uri);
+        Task<string> getContent(Uri uri, HttpClient client) =>
+            client.GetStringAsync(uri);
 
         Task<Lst<string>> getLines(string text) =>
             Task.FromResult(text.Split('\n').Freeze());
@@ -94,7 +90,7 @@ namespace LanguageExtTests
             // Maps the lines to line-lengths, then sums them
             int totalSize = getURLContent("http://www.google.com")
                                 .MapT(x => x.Length)
-                                .SumT();
+                                .SumT<TInt, int>();
         }
     }
 }
